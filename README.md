@@ -18,7 +18,7 @@ This project is a design-to-code implementation of a Figma design system. The si
 | `/works` | `src/app/works/page.tsx` | Works list — scrollable project cards with scroll-triggered animations |
 | `/works/[slug]` | `src/app/works/[slug]/page.tsx` | Works detail — two-panel layout, image-level navigation, next project CTA |
 | `/about` | `src/app/about/page.tsx` | About page — studio description + team photos |
-| `/contact` | `src/app/contact/page.tsx` | Contact page — phone, address, WhatsApp CTA |
+| `/contact` | `src/app/contact/page.tsx` | Contact page — matched to Figma layout with active hover states |
 
 ---
 
@@ -179,6 +179,17 @@ The project uses Figma MCP for design-to-code workflow. MCP config is in `~/.con
 
 **Important:** The Figma MCP server must be running (`http://127.0.0.1:3845/mcp`). The MCP tools are only loaded at session start — **restart opencode** if tools are missing.
 
+### OpenCode Version Compatibility Notes
+
+This project expects OpenCode CLI `>= 1.14.x`.
+
+- If `opencode --version` does not match your installed Homebrew version, relink it:
+  - `brew unlink opencode && brew link opencode --overwrite`
+- If you have local SDK integrations/scripts, account for OpenCode SDK breaking changes from `v1.4.0`:
+  - `userMessage.variant` → `userMessage.model.variant`
+  - diff metadata now uses unified `patch` (no full `to`/`from` payloads)
+- If you maintain OpenCode compaction settings, use `preserve_recent_tokens` (new name from `v1.14.19`).
+
 ### Figma Node IDs
 
 | Page | Node ID |
@@ -201,8 +212,8 @@ The project uses Figma MCP for design-to-code workflow. MCP config is in `~/.con
 ## Known Issues & Limitations
 
 1. **Figma MCP server dependency** — Tools only available when MCP server is running. Restart opencode to reconnect.
-2. **Static project data** — Projects are hardcoded arrays, not fetched from an API. No CMS or database yet.
-3. **Contact page layout** — Not yet matched to Figma design node `13:83`. Needs re-implementation once Figma MCP is working.
+2. **Responsive design** — No mobile layouts yet (sidebar -> hamburger menu needed). Reference: https://byedwrd-blprnt.framer.website/
+3. **Static project data** — Projects are hardcoded arrays, not fetched from an API. No CMS or database yet.
 4. **About page images** — Use Unsplash placeholders instead of real studio photos. Replace with assets from `/public/assets/` when available.
 5. **Works detail page logo** — Still uses `/assets/logo.png` via Sidebar. The works detail page has a custom logo reference that should use the same asset.
 
@@ -223,7 +234,7 @@ See `SESSION_CONTEXT.md` in the project root for the most recent session summary
 2. **Implement Contact page** — Slice from Figma node `13:83` once MCP is working
 3. **Replace placeholder images** — Swap Unsplash URLs for real project/studio photos in `/public/assets/`
 4. **Polish animations** — Fine-tune Framer Motion durations/easing based on Agentation feedback
-5. **Responsive design** — Add mobile layouts (sidebar becomes hamburger menu)
+5. **Responsive design** — Add mobile layouts (sidebar becomes hamburger menu), reference: https://byedwrd-blprnt.framer.website/
 6. **Deploy** — Set up Vercel or other hosting
 
 ---

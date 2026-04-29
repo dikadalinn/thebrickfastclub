@@ -25,19 +25,17 @@ function NavItem({ item, pathname }: { item: { label: string; href: string }, pa
   return (
     <Link 
       href={item.href}
-      className="flex w-full items-center py-[8px] relative group"
+      className="flex w-full items-center py-[10px] pr-[16px] relative group"
     >
       <div 
         className="w-2 h-2 rounded-full bg-[#2f2c29] transition-opacity duration-300 opacity-0 group-hover:opacity-100"
         style={{ marginRight: 6, opacity: isActive ? 1 : undefined }}
       />
-      <motion.span 
-        className="font-['Helvetica'] font-medium text-[16px] text-[#2f2c29] leading-[19.2px] whitespace-nowrap"
-        whileHover={{ x: 6 }}
-        transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+      <span
+        className="font-['Helvetica'] font-medium text-[16px] text-[#2f2c29] leading-[19.2px] whitespace-nowrap group-hover:translate-x-[6px] transition-transform duration-300 ease-[0.25,0.1,0.25,1]"
       >
         {item.label}
-      </motion.span>
+      </span>
     </Link>
   );
 }

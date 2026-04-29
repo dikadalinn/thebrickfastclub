@@ -1,65 +1,197 @@
-import Image from "next/image";
+"use client";
+
+import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import Sidebar from '@/components/Sidebar';
+
+const imgLucideArrowRight = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M12 5l7 7-7 7'/%3E%3C/svg%3E";
+const imgVariant1 = "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1920&q=80";
+const imgVariant2 = "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=1920&q=80";
+const imgVariant3 = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80";
+const imgVariant4 = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80";
+const imgVariant5 = "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1920&q=80";
+
+type Project = {
+  slug: string;
+  title: string;
+  description: string;
+  image: string;
+};
+
+const projects: Project[] = [
+  {
+    slug: 'green-cove',
+    title: 'Kitchen Interior',
+    description:
+      'Green Cove is a modern kitchen space celebrating natural textures and clean functional layouts, designed to bring warmth and clarity into everyday living.',
+    image: imgVariant1,
+  },
+  {
+    slug: 'sienna-grove',
+    title: 'Mr. A Bedroom Interior',
+    description:
+      'Sienna Grove is a modern abode that celebrates the warmth of natural materials and the charm of urban living. The kitchen, with its striking terracotta gradient cabinets, is a focal point that embodies the home\'s earthy yet contemporary design.',
+    image: imgVariant2,
+  },
+  {
+    slug: 'villa-serenity',
+    title: 'Villa Serenity',
+    description:
+      'Villa Serenity blends refined architecture with calming natural light, creating a quiet sanctuary for contemporary family life.',
+    image: imgVariant3,
+  },
+  {
+    slug: 'midnight-haven',
+    title: 'Midnight Haven',
+    description:
+      'Midnight Haven delivers a sophisticated residential atmosphere through layered material palettes and precise spatial composition.',
+    image: imgVariant4,
+  },
+  {
+    slug: 'solace-villa',
+    title: 'Solace Villa',
+    description:
+      'Solace Villa is crafted as a peaceful retreat, balancing open circulation, serene views, and tactile modern finishes.',
+    image: imgVariant5,
+  },
+];
 
 export default function Home() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [hoverSide, setHoverSide] = useState<'left' | 'right' | null>(null);
+  const currentProject = projects[currentIndex];
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % projects.length);
+  };
+
+  const goToPrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length);
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      goToNext();
+    }, 4000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleHeroMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    setHoverSide(x < rect.width / 2 ? 'left' : 'right');
+  };
+
+  const handleHeroClick = () => {
+    if (hoverSide === 'left') {
+      goToPrev();
+      return;
+    }
+    if (hoverSide === 'right') {
+      goToNext();
+    }
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className="bg-[#f0f4f8] min-h-screen w-full flex overflow-hidden">
+      <Sidebar />
+      <div
+        className="relative flex-1 h-screen overflow-hidden bg-[#d9d9d9] cursor-pointer"
+        onMouseMove={handleHeroMouseMove}
+        onMouseLeave={() => setHoverSide(null)}
+        onClick={handleHeroClick}
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentProject.image}
+            initial={{ opacity: 0, scale: 1.03 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.01 }}
+            transition={{ duration: 0.7, ease: 'easeOut' }}
+            className="absolute inset-0"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+            <img src={currentProject.image} alt={currentProject.title} className="w-full h-full object-cover" />
+          </motion.div>
+        </AnimatePresence>
+
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent opacity-30 to-black" />
+
+        <AnimatePresence>
+          {hoverSide && (
+            <motion.div
+              key={hoverSide}
+              initial={{ opacity: 0, x: hoverSide === 'left' ? -10 : 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: hoverSide === 'left' ? -10 : 10 }}
+              transition={{ duration: 0.2 }}
+              className={`absolute top-1/2 -translate-y-1/2 z-20 ${hoverSide === 'left' ? 'left-10' : 'right-10'}`}
+            >
+              <div className="w-14 h-14 rounded-full border border-white/40 bg-black/20 backdrop-blur-sm flex items-center justify-center">
+                <img
+                  src={imgLucideArrowRight}
+                  alt=""
+                  className={`w-7 h-7 brightness-0 invert ${hoverSide === 'left' ? 'rotate-180' : ''}`}
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div className="absolute bottom-[200px] left-[69px] max-w-[639px] text-white z-10 pointer-events-none">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentProject.slug}
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -10, opacity: 0 }}
+              transition={{ duration: 0.35 }}
+            >
+              <p className="text-2xl mb-4 font-['Helvetica']">{currentProject.title}</p>
+              <p className="text-base leading-relaxed font-['Helvetica']">{currentProject.description}</p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        <Link
+          href={`/works/${currentProject.slug}`}
+          className="absolute bottom-[104px] left-[69px] z-20 flex items-center gap-4 group"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="w-8 h-8 rounded-full border border-white/35 flex items-center justify-center transition-all">
+            <img
+              src={imgLucideArrowRight}
+              alt=""
+              className="w-6 h-6 brightness-0 invert"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
+          <span className="text-xl text-white font-['Helvetica'] group-hover:translate-x-2 transition-transform">
+            View project
+          </span>
+        </Link>
+
+        <div className="absolute right-12 bottom-[104px] z-20">
+          <div className="relative h-8 w-8">
+            <svg className="h-8 w-8 -rotate-90" viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="16" r="13" stroke="rgba(255,255,255,0.3)" strokeWidth="3" />
+              <motion.circle
+                key={currentIndex}
+                cx="16"
+                cy="16"
+                r="13"
+                stroke="white"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeDasharray={81.68}
+                initial={{ strokeDashoffset: 81.68 }}
+                animate={{ strokeDashoffset: 0 }}
+                transition={{ duration: 4, ease: 'linear' }}
+              />
+            </svg>
+          </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }

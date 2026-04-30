@@ -15,13 +15,13 @@ export default function Contact() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col border-l border-black flex-1"
+          className="flex flex-col flex-1"
         >
           {/* Top Section - Phone & Address */}
           <div className="flex flex-col gap-[5px] p-[60px] pb-0">
             <div className="flex flex-col gap-[12px] w-full">
               {/* Phone Number - Right aligned */}
-              <div className="flex flex-col items-end">
+              <div className="flex flex-col items-start lg:items-end">
                 <a
                   href="tel:+6285219671345"
                   className="font-['Helvetica'] font-medium text-[14.6px] leading-[22.4px] text-[#2f2c29] whitespace-nowrap hover:opacity-70 transition-opacity"
@@ -31,7 +31,7 @@ export default function Contact() {
               </div>
 
               {/* Address - Right aligned */}
-              <div className="flex flex-col items-end font-['Helvetica'] font-medium text-[#2f2c29] text-right">
+              <div className="flex flex-col items-start lg:items-end font-['Helvetica'] font-medium text-[#2f2c29] lg:text-right">
                 <a
                   href="https://www.google.com/maps"
                   target="_blank"
@@ -52,7 +52,7 @@ export default function Contact() {
             </div>
 
             {/* Instagram - Right aligned */}
-            <div className="flex flex-col items-end mt-[12px]">
+            <div className="flex flex-col items-start lg:items-end mt-[12px]">
               <a
                 href="https://www.instagram.com/brickfastclub/"
                 target="_blank"

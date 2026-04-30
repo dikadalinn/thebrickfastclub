@@ -41,9 +41,6 @@ export default function MobileNav() {
         </button>
       </header>
 
-      {/* Spacer so content doesn't hide under fixed header */}
-      <div className="h-[56px]" />
-
       {/* Full-screen overlay */}
       <AnimatePresence>
         {open && (
@@ -64,8 +61,7 @@ export default function MobileNav() {
                     key={item.href}
                     href={item.href}
                     onClick={close}
-                    className="font-['Helvetica'] text-3xl font-medium tracking-widest text-[#2f2c29] transition-opacity hover:opacity-50"
-                    style={{ opacity: isActive ? 0.5 : 1 }}
+                    className={`font-['Helvetica'] text-3xl font-medium tracking-widest text-[#2f2c29] transition-opacity ${isActive ? "opacity-50 cursor-default" : "hover:opacity-50"}`}
                   >
                     {item.label}
                   </Link>

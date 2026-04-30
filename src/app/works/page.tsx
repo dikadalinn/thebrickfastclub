@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import Link from 'next/link';
 import Sidebar from '@/components/Sidebar';
 
 const imgVariant1 = "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1920&q=80";
@@ -24,7 +23,7 @@ export default function Works() {
       <Sidebar width="w-[425px]" />
 
       {/* Projects List */}
-      <div className="flex-1 border-l border-black p-6">
+      <div className="flex-1 p-6">
         <div className="max-w-[967px] mx-auto flex flex-col gap-6">
           {projects.map((project, index) => (
             <motion.a
@@ -36,13 +35,11 @@ export default function Works() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="flex flex-col gap-2 group cursor-pointer"
             >
-              <div className="relative h-[600px] w-full overflow-hidden bg-gray-200">
-                <motion.img 
-                  src={project.img} 
+              <div className="relative w-full overflow-hidden bg-gray-200" style={{ aspectRatio: "3/4" }}>
+                <img
+                  src={project.img}
                   alt={project.title}
-                  className="w-full h-[113.75%] object-cover object-top -mt-[6.87%]"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
               <div className="flex justify-between items-start pt-2 font-bold text-[#2f2c29] text-[13px]">

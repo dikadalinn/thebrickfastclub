@@ -1,23 +1,46 @@
+"use client";
+
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import { getAllWorks } from "@/lib/sanity/queries";
 import { STATIC_WORKS } from "@/lib/data/works";
 import Sidebar from '@/components/Sidebar';
 
-export default async function Works() {
-  const sanityWorks = await getAllWorks();
-  const projects = sanityWorks.length > 0
-    ? sanityWorks.map((w) => ({
-        id: w._id,
-        slug: w.slug,
-        title: w.title,
-        img: w.thumbnail ?? w.galleryImages[0] ?? "",
-      }))
-    : STATIC_WORKS.map((w, i) => ({
-        id: `static-${i + 1}`,
-        slug: w.slug,
-        title: w.title,
-        img: w.thumbnail ?? w.galleryImages[0] ?? "",
-      }));
+export default function Works() {
+  const [projects, setProjects] = useState<{ id: string; slug: string; title: string; img: string }[]>([]);
+
+  useEffect(() => {
+    async function load() {
+      const sanityWorks = await getAllWorks();
+      const p = sanityWorks.length > 0
+        ? sanityWorks.map((w) => ({
+            id: w._id,
+            slug: w.slug,
+            title: w.title,
+            img: w.thumbnail ?? w.galleryImages[0] ?? "",
+          }))
+        : STATIC_WORKS.map((w, i) => ({
+            id: `static-${i + 1}`,
+            slug: w.slug,
+            title: w.title,
+            img: w.thumbnail ?? w.galleryImages[0] ?? "",
+          }));
+      setProjects(p);
+    }
+    load();
+  }, []);
+
+  if (projects.length === 0) {
+    return (
+      <main className="bg-[#f0f4f8] min-h-screen w-full flex font-['Inter',sans-serif]">
+        <Sidebar width="w-[425px]" />
+        <div className="flex-1 p-6 flex items-center justify-center">
+          <p className="font-['Helvetica'] text-[#2f2c29]">Loading...</p>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="bg-[#f0f4f8] min-h-screen w-full flex font-['Inter',sans-serif]">
       <Sidebar width="w-[425px]" />

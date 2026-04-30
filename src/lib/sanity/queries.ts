@@ -1,5 +1,5 @@
 import { client, urlFor } from "./client";
-import type { SanityImageSource } from "@sanity/image-url";
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import type { Work } from "./types";
 
 function mapDoc(doc: Record<string, unknown>): Work {

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Montserrat, Martian_Mono } from "next/font/google";
 import "./globals.css";
 import AgentationWrapper from "@/components/AgentationWrapper";
+import MobileNav from "@/components/MobileNav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,7 +40,16 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${martianMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {children}
+        {/* MobileNav is hidden on lg screens and up. It provides the fixed top bar and overlay. */}
+        <div className="block lg:hidden">
+          <MobileNav />
+        </div>
+
+        {/* On mobile, pt-[56px] offsets the fixed MobileNav header. On desktop (lg:), no top padding. */}
+        <div className="flex-1 flex flex-col pt-[56px] lg:pt-0">
+          {children}
+        </div>
+
         <AgentationWrapper />
       </body>
     </html>

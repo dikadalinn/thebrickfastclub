@@ -48,7 +48,7 @@ export default function Sidebar({ width = "w-[347px]" }: SidebarProps) {
       initial={{ x: -100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className={`${width} h-screen sticky top-0 flex flex-col justify-between p-[60px] z-20 bg-[#f0f4f8] border-r border-black/10`}
+      className={`${width} h-screen sticky top-0 hidden lg:flex flex-col justify-between p-[60px] z-20 bg-[#f0f4f8] border-r border-black/10`}
     >
       <Link href="/" className="w-[197px] h-[118px] relative block">
         <img src={imgLogo} alt="The Brickfast Club" className="w-full h-full object-contain" />

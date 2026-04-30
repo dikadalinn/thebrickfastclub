@@ -10,7 +10,7 @@ function mapDoc(doc: Record<string, unknown>): Work {
   return {
     _id: doc._id as string,
     title: doc.title as string,
-    slug: doc.slug as string,
+    slug: (doc.slug as { current?: string } | undefined)?.current ?? "",
     location: doc.location as string,
     year: doc.year as string,
     description: doc.description as string,
@@ -40,7 +40,7 @@ export async function getAllWorks(): Promise<Work[]> {
 export async function getWorkBySlug(slug: string): Promise<Work | null> {
   try {
     const doc = await client.fetch<Record<string, unknown> | null>(
-      `*[_type == "work" && slug == $slug][0] {
+      `*[_type == "work" && slug.current == $slug][0] {
         _id, title, slug, location, year, description,
         galleryImages[] { asset-> }, thumbnail { asset-> }, order
       }`,
@@ -54,7 +54,7 @@ export async function getWorkBySlug(slug: string): Promise<Work | null> {
 
 export async function getAllWorkSlugs(): Promise<string[]> {
   try {
-    return await client.fetch<string[]>(`*[_type == "work"].slug`);
+    return await client.fetch<string[]>(`*[_type == "work"].slug.current`);
   } catch {
     return [];
   }

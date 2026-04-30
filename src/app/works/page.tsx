@@ -7,24 +7,27 @@ import { STATIC_WORKS } from "@/lib/data/works";
 import Sidebar from '@/components/Sidebar';
 
 export default function Works() {
-  const [projects, setProjects] = useState<{ id: string; slug: string; title: string; img: string }[]>([]);
+  const [projects, setProjects] = useState<{ key: string; order: number; slug: string; title: string; img: string }[]>([]);
 
   useEffect(() => {
     async function load() {
       const sanityWorks = await getAllWorks();
       const p = sanityWorks.length > 0
-        ? sanityWorks.map((w) => ({
-            id: w._id,
+        ? sanityWorks.map((w, i) => ({
+            key: w._id,
+            order: typeof w.order === 'number' ? w.order : i + 1,
             slug: w.slug,
             title: w.title,
             img: w.thumbnail ?? w.galleryImages[0] ?? "",
           }))
         : STATIC_WORKS.map((w, i) => ({
-            id: `static-${i + 1}`,
+            key: `static-${i + 1}`,
+            order: typeof w.order === 'number' ? w.order : i + 1,
             slug: w.slug,
             title: w.title,
             img: w.thumbnail ?? w.galleryImages[0] ?? "",
           }));
+
       setProjects(p);
     }
     load();
@@ -51,22 +54,22 @@ export default function Works() {
           {projects.map((project, index) => (
             <motion.a
               href={`/works/${project.slug}`}
-              key={project.id}
+              key={project.key}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="flex flex-col gap-2 group cursor-pointer"
             >
-              <div className="relative w-full overflow-hidden bg-gray-200" style={{ aspectRatio: "3/4" }}>
+              <div className="relative w-full overflow-hidden bg-gray-200" style={{ aspectRatio: "16/9" }}>
                 <img
                   src={project.img}
                   alt={project.title}
-                  className="w-full h-full object-cover object-top"
+                  className="w-full h-full object-cover object-center"
                 />
               </div>
               <div className="flex justify-between items-start pt-2 font-bold text-[#2f2c29] text-[13px]">
-                <span>{project.id}</span>
+                <span>{String(project.order).padStart(2, '0')}</span>
                 <span>{project.title}</span>
               </div>
             </motion.a>

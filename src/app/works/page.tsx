@@ -1,23 +1,23 @@
-"use client";
-
 import { motion } from 'framer-motion';
+import { getAllWorks } from "@/lib/sanity/queries";
+import { STATIC_WORKS } from "@/lib/data/works";
 import Sidebar from '@/components/Sidebar';
 
-const imgVariant1 = "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1920&q=80";
-const imgVariant2 = "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=1920&q=80";
-const imgVariant3 = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80";
-const imgVariant4 = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80";
-const imgVariant5 = "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1920&q=80";
-
-const projects = [
-  { id: "01", slug: "green-cove", title: "Kitchen Interior", img: imgVariant1 },
-  { id: "02", slug: "sienna-grove", title: "Mr. A Bedroom Interior", img: imgVariant2 },
-  { id: "03", slug: "villa-serenity", title: "Villa Serenity", img: imgVariant3 },
-  { id: "04", slug: "midnight-haven", title: "Midnight Haven", img: imgVariant4 },
-  { id: "05", slug: "solace-villa", title: "Solace Villa", img: imgVariant5 },
-];
-
-export default function Works() {
+export default async function Works() {
+  const sanityWorks = await getAllWorks();
+  const projects = sanityWorks.length > 0
+    ? sanityWorks.map((w) => ({
+        id: w._id,
+        slug: w.slug,
+        title: w.title,
+        img: w.thumbnail ?? w.galleryImages[0] ?? "",
+      }))
+    : STATIC_WORKS.map((w, i) => ({
+        id: `static-${i + 1}`,
+        slug: w.slug,
+        title: w.title,
+        img: w.thumbnail ?? w.galleryImages[0] ?? "",
+      }));
   return (
     <main className="bg-[#f0f4f8] min-h-screen w-full flex font-['Inter',sans-serif]">
       <Sidebar width="w-[425px]" />

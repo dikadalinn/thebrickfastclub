@@ -44,11 +44,11 @@ export default function About() {
         transition={{ duration: 0.8, delay: 0.2 }}
         className="flex flex-col lg:flex-row gap-4 pb-10"
       >
-        <div className="w-full" style={{ aspectRatio: "3/4" }}>
-           <img src={imgVariant1} alt="About 1" className="w-full h-full object-cover rounded" />
+        <div className="w-full overflow-hidden rounded" style={{ aspectRatio: "3/4" }}>
+           <img src={imgVariant1} alt="About 1" className="w-full h-full object-cover" />
         </div>
-        <div className="w-full" style={{ aspectRatio: "3/4" }}>
-           <img src={imgVariant2} alt="About 2" className="w-full h-full object-cover rounded" />
+        <div className="w-full overflow-hidden rounded" style={{ aspectRatio: "3/4" }}>
+           <img src={imgVariant2} alt="About 2" className="w-full h-full object-cover" />
         </div>
       </motion.div>
 

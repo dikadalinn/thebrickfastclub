@@ -139,7 +139,7 @@ export default function Home() {
           )}
         </AnimatePresence>
 
-        <div className="absolute bottom-[200px] left-[69px] max-w-[639px] text-white z-10 pointer-events-none">
+        <div className="absolute bottom-[120px] left-6 right-6 lg:bottom-[200px] lg:left-[69px] lg:right-auto max-w-[639px] text-white z-10 pointer-events-none">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentProject.slug}
@@ -156,7 +156,7 @@ export default function Home() {
 
         <Link
           href={`/works/${currentProject.slug}`}
-          className="absolute bottom-[104px] left-[69px] z-20 flex items-center gap-4 group"
+          className="absolute bottom-[60px] left-6 lg:bottom-[104px] lg:left-[69px] z-20 flex items-center gap-4 group"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="w-8 h-8 rounded-full border border-white/35 flex items-center justify-center transition-all">
@@ -171,7 +171,7 @@ export default function Home() {
           </span>
         </Link>
 
-        <div className="absolute right-12 bottom-[104px] z-20">
+        <div className="absolute right-6 bottom-[60px] lg:right-12 lg:bottom-[104px] z-20">
           <div className="relative h-8 w-8">
             <svg className="h-8 w-8 -rotate-90" viewBox="0 0 32 32" fill="none">
               <circle cx="16" cy="16" r="13" stroke="rgba(255,255,255,0.3)" strokeWidth="3" />

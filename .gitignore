@@ -46,3 +46,6 @@ next-env.d.ts
 # temp/helper files
 snapshot*.txt
 fetch_figma.js
+
+# worktrees
+.worktrees/

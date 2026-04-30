@@ -24,9 +24,21 @@ const martianMono = Martian_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
-  title: "The Brickfast Club",
-  description: "Interior Design Portfolio",
+export const metadata: Metadata = {
+  title: "The Brickfast Club — Architecture & Interior Design",
+  description: "Jakarta-based interior design and architecture studio founded by Gifari Putranto. Explore our portfolio of minimalist, character-driven spaces.",
+  icons: {
+    icon: [
+      { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' }
+    ],
+    apple: [
+      { url: '/favicon/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
+    ],
+    other: [
+      { rel: 'manifest', url: '/favicon/site.webmanifest' }
+    ]
+  }
 };
 
 export default function RootLayout({

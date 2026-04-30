@@ -109,6 +109,20 @@ Projects are currently defined as a static array in each page file (not from an 
 | `midnight-haven` | Midnight Haven | BSD, Tangerang | 2022 |
 | `solace-villa` | Solace Villa | Ubud, Bali | 2024 |
 
+### Sanity CMS
+
+The Works pages are powered by Sanity CMS (project ID: `bffutwi3`, dataset: `production`).
+
+Schema: `work` document type with fields:
+- `title`, `slug`, `location`, `year`, `description`
+- `galleryImages[]` — used for the Works Detail carousel
+- `thumbnail` — optional dedicated thumbnail (falls back to `galleryImages[0]`)
+- `order` — display order
+
+If Sanity is unavailable or empty, the site falls back to static data in `src/lib/data/works.ts`.
+
+Studio: `studio-the-brickfast-club/`
+
 ---
 
 ## Assets

@@ -80,58 +80,37 @@ export default function WorksDetail() {
   const goNextImage = () => setImageIndex((i) => (i + 1) % project.images.length);
 
   return (
-    <main className="bg-[#f0f4f8] flex min-h-screen w-full">
-      {/* Left Panel */}
-      <section className="flex h-screen w-[425px] shrink-0 flex-col justify-between bg-[#f0f4f8] p-[60px]">
-        <Link href="/works" className="relative block h-[118px] w-[197px]">
-          <img src={imgLogo} alt="The Brickfast Club" className="h-full w-full object-contain" />
+    <main className="bg-[#f0f4f8] min-h-screen w-full flex flex-col">
+      {/* Top bar: back button + location */}
+      <div className="flex items-center justify-between bg-[#f0f4f8] p-6">
+        <Link href="/works" className="flex items-center gap-3 group">
+          <img src={imgSiCloseDuotone} alt="Back" className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
+          <span className="font-['Helvetica'] text-sm text-[#2f2c29]">BACK</span>
         </Link>
+        <span className="font-['Helvetica'] text-sm text-[#2f2c29]">{project.location}</span>
+      </div>
 
-        <motion.div
-          key={project.slug}
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, ease: 'easeOut' }}
-          className="flex w-full flex-col items-start gap-[25px]"
-        >
-          {/* Title & Location */}
-          <div className="flex w-full flex-col items-start gap-[5px] overflow-hidden">
-            <h1 className="font-['Helvetica'] text-[20px] font-bold leading-[24px] tracking-[-0.8px] text-[#2f2c29] whitespace-nowrap">
-              {project.title}
-            </h1>
-            <p className="font-['Helvetica'] text-[16px] font-normal leading-[18px] text-[#2f2c29] whitespace-nowrap">
-              {project.location}
-            </p>
-          </div>
+      {/* Project info */}
+      <motion.div
+        key={project.slug}
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, ease: "easeOut" }}
+        className="px-6 pb-6 flex flex-col gap-3"
+      >
+        <h1 className="font-['Helvetica'] text-[20px] font-bold tracking-[-0.8px] text-[#2f2c29]">
+          {project.title}
+        </h1>
+        <p className="font-[var(--font-martian-mono)] text-[13px] font-bold tracking-[14px] text-[#2f2c29]">
+          {project.year}
+        </p>
+        <p className="font-['Helvetica'] text-[16px] leading-6 text-[#2f2c29]">
+          {project.description}
+        </p>
+      </motion.div>
 
-          {/* Year */}
-          <div className="min-w-[95.2px]">
-            <p className="font-[var(--font-martian-mono)] text-[14px] font-bold leading-[28px] tracking-[14px] text-[#2f2c29]">
-              {project.year}
-            </p>
-          </div>
-
-          {/* Description */}
-          <div className="w-full">
-            <p className="w-full whitespace-pre-wrap font-['Helvetica'] text-[16px] font-normal leading-[24px] text-[#2f2c29]">
-              {project.description}
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Image Navigation (prev/next image within project) */}
-        <div className="flex items-center gap-[25px]">
-          <button onClick={goPrevImage} className="group flex h-[25px] w-[25px] items-center justify-center">
-            <img src={imgPrev} alt="Previous image" className="h-[25px] w-[25px] transition-transform duration-200 group-hover:-translate-x-1" />
-          </button>
-          <button onClick={goNextImage} className="group flex h-[25px] w-[25px] items-center justify-center">
-            <img src={imgNext} alt="Next image" className="h-[25px] w-[25px] transition-transform duration-200 group-hover:translate-x-1" />
-          </button>
-        </div>
-      </section>
-
-      {/* Right Panel - Hero Image */}
-      <section className="relative h-screen min-w-0 flex-1 overflow-hidden bg-[#d9d9d9]">
+      {/* Image with navigation overlay */}
+      <div className="relative flex-1 min-h-[50vh]">
         <AnimatePresence mode="wait">
           <motion.img
             key={`${project.slug}-${imageIndex}`}
@@ -140,33 +119,31 @@ export default function WorksDetail() {
             initial={{ opacity: 0, scale: 1.03 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="h-full w-full object-cover"
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="w-full h-full object-cover"
           />
         </AnimatePresence>
 
-        {/* NEXT PROJECT — aligned to right */}
-        <Link
-          href={`/works/${nextProject.slug}`}
-          className="absolute bottom-[32px] right-[32px] z-10 flex items-center bg-[#f0f4f8] px-[24px] py-[16px] hover:bg-[#e0e4e8] transition-colors"
-        >
-          <p className="font-['Helvetica'] text-[12px] font-normal leading-normal tracking-[4.32px] text-black whitespace-nowrap">
-            NEXT PROJECT
-          </p>
-        </Link>
+        {/* Image navigation */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-8">
+          <button onClick={goPrevImage} className="group flex h-10 w-10 items-center justify-center bg-white/80 backdrop-blur rounded-full shadow" aria-label="Previous image">
+            <img src={imgPrev} alt="" className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
+          </button>
+          <button onClick={goNextImage} className="group flex h-10 w-10 items-center justify-center bg-white/80 backdrop-blur rounded-full shadow" aria-label="Next image">
+            <img src={imgNext} alt="" className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+          </button>
+        </div>
+      </div>
 
-        {/* Close button — hover: black bg, white X */}
-        <Link
-          href="/works"
-          className="group absolute right-[27px] top-[27px] z-10 flex h-[48px] w-[48.686px] items-center justify-center rounded-full bg-white transition-colors duration-200 hover:bg-black"
-        >
-          <img
-            src={imgSiCloseDuotone}
-            alt="Close"
-            className="h-[35.624px] w-[35.624px] transition-all duration-200 group-hover:brightness-0 group-hover:invert"
-          />
-        </Link>
-      </section>
+      {/* Next project CTA */}
+      <Link
+        href={`/works/${nextProject.slug}`}
+        className="flex items-center justify-center bg-[#f0f4f8] py-5 hover:bg-[#e0e4e8] transition-colors"
+      >
+        <p className="font-['Helvetica'] text-[12px] tracking-[4.32px] text-black">
+          NEXT PROJECT
+        </p>
+      </Link>
     </main>
   );
 }

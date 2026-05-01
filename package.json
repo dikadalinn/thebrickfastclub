@@ -10,15 +10,12 @@
   },
   "dependencies": {
     "@sanity/client": "^7.22.0",
-    "@sanity/vision": "^3.71.2",
+    "@sanity/image-url": "^2.1.1",
     "agentation": "^3.0.2",
     "framer-motion": "^12.38.0",
     "next": "16.2.4",
-    "next-sanity": "^12.3.2",
     "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "sanity": "^3.71.2",
-    "styled-components": "^6.1.14"
+    "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

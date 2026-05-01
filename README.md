@@ -125,6 +125,32 @@ Studio: `studio-the-brickfast-club/`
 
 ---
 
+## Vercel Deployment
+
+This project is deployed as a single Vercel app with an embedded Sanity Studio at `/studio`.
+
+### Required Vercel Environment Variables
+
+For the website:
+- `NEXT_PUBLIC_SANITY_PROJECT_ID=bffutwi3`
+- `NEXT_PUBLIC_SANITY_DATASET=production`
+- `NEXT_PUBLIC_SANITY_API_VERSION=2026-03-01`
+
+For the embedded Studio:
+- `SANITY_STUDIO_PROJECT_ID=bffutwi3`
+- `SANITY_STUDIO_DATASET=production`
+
+### Deploy Steps
+1. Import the GitHub repo into Vercel
+2. Add the environment variables above in Project Settings → Environment Variables
+3. Deploy
+4. Verify:
+   - `/works` shows Sanity content
+   - `/works/[slug]` shows Sanity gallery images
+   - `/studio` loads and requires Sanity login
+
+---
+
 ## Assets
 
 ### Local Assets (`/public/assets/`)
